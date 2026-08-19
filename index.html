@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0d1b2a">
 <title>BLUE REEF Developments — Cyprus</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap');
@@ -129,7 +131,29 @@ nav a {
 }
 nav a:hover { color: var(--sand); }
 .header-cta { display: flex; align-items: center; gap: 24px; }
-.nav-mobile-toggle { display: none; background: none; border: none; cursor: pointer; }
+.nav-mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 10px; }
+
+/* ── MOBILE NAV ─────────────────────────────────────── */
+.mobile-nav {
+  position: fixed; inset: 0; z-index: 200; background: var(--navy);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+  transform: translateX(100%); transition: transform 0.4s var(--ease-cinematic);
+}
+.mobile-nav.open { transform: translateX(0); }
+.mobile-nav nav { flex-direction: column; gap: 28px; }
+.mobile-nav nav a { font-family: var(--serif); font-size: 26px; letter-spacing: 0.02em; text-transform: none; color: var(--cream); }
+.mobile-nav-close { position: absolute; top: 24px; right: 24px; background: none; border: none; color: var(--cream); cursor: pointer; padding: 10px; }
+
+/* ── FOCUS STATES ───────────────────────────────────── */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--sand); outline-offset: 3px;
+}
+.contact-form input:focus-visible, .contact-form textarea:focus-visible { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,145,90,0.18); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
 
 /* ── HERO ───────────────────────────────────────────── */
 #hero { min-height: 100vh; display: flex; align-items: flex-end; padding-bottom: 100px; padding-top: 140px; }
@@ -337,7 +361,7 @@ footer {
   .bento-tile.wide, .portfolio-card.featured { grid-column: span 2; }
   .journal-grid { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
-  nav { display: none; }
+  #header nav { display: none; }
   .nav-mobile-toggle { display: block; }
 }
 @media (max-width: 640px) {
@@ -362,10 +386,24 @@ footer {
   <div class="header-cta">
     <a href="#contact" class="btn btn-primary">Private Introduction</a>
   </div>
-  <button class="nav-mobile-toggle" aria-label="Menu">
+  <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav" id="mobileNavToggle">
     <svg width="22" height="14" viewBox="0 0 22 14" fill="none"><line x1="0" y1="1" x2="22" y2="1" stroke="white" stroke-width="1.2"/><line x1="0" y1="7" x2="22" y2="7" stroke="white" stroke-width="1.2"/><line x1="0" y1="13" x2="22" y2="13" stroke="white" stroke-width="1.2"/></svg>
   </button>
 </header>
+
+<!-- MOBILE NAV -->
+<div id="mobileNav" class="mobile-nav" role="dialog" aria-modal="true" aria-label="Site navigation">
+  <button class="mobile-nav-close" aria-label="Close menu" id="mobileNavClose">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="1.2"/><line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="1.2"/></svg>
+  </button>
+  <nav>
+    <a href="#philosophy">Philosophy</a>
+    <a href="#sunrock">Developments</a>
+    <a href="#location">Location</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a href="#contact" class="btn btn-primary">Private Introduction</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -403,7 +441,7 @@ footer {
         </div>
       </div>
       <div class="philosophy-image reveal">
-        <div class="media" data-caption="Sunrock Residences · Germasogeia"></div>
+        <div class="media"></div>
         <div class="philosophy-image-caption">Sunrock Residences · Germasogeia</div>
       </div>
     </div>
@@ -735,12 +773,22 @@ document.addEventListener('DOMContentLoaded', function () {
   }, { threshold: 0.15 });
   revealEls.forEach(function (el) { io.observe(el); });
 
-  var toggle = document.querySelector('.nav-mobile-toggle');
-  if (toggle) {
-    toggle.addEventListener('click', function () {
-      document.getElementById('header').classList.toggle('scrolled');
-    });
+  var toggle = document.getElementById('mobileNavToggle');
+  var closeBtn = document.getElementById('mobileNavClose');
+  var mobileNav = document.getElementById('mobileNav');
+  function setMobileNav(open) {
+    mobileNav.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
   }
+  if (toggle) toggle.addEventListener('click', function () { setMobileNav(true); });
+  if (closeBtn) closeBtn.addEventListener('click', function () { setMobileNav(false); });
+  mobileNav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { setMobileNav(false); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setMobileNav(false);
+  });
 });
 </script>
 </body>
