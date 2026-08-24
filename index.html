@@ -7,7 +7,27 @@
 <meta name="theme-color" content="#0d1b2a">
 <title>BLUE REEF Developments — Cyprus</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap');
+@font-face {
+  font-family: 'Adelle Sans';
+  src: url('uploads/AdelleSans-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Adelle Sans';
+  src: url('uploads/AdelleSans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('uploads/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* ── TOKENS (from DESIGN.md) ───────────────────────── */
 :root {
@@ -29,7 +49,7 @@
   --overlay:     rgba(13,27,42,0.72);
 
   --serif: 'Playfair Display', Georgia, serif;
-  --sans:  'Jost', system-ui, sans-serif;
+  --sans:  'Adelle Sans', system-ui, sans-serif;
 
   --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
@@ -407,7 +427,7 @@ footer {
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-bg"><div class="media" data-caption="Limassol, Cyprus — aerial at sunset"></div></div>
+  <div class="hero-bg"><video class="media" autoplay muted loop playsinline preload="auto" poster="assets/hero-aerial-sunset.jpg"><source src="assets/hero-video.mp4" type="video/mp4"></video></div>
   <div class="hero-content">
     <div class="section-inner">
       <div>
@@ -441,7 +461,7 @@ footer {
         </div>
       </div>
       <div class="philosophy-image reveal">
-        <div class="media"></div>
+        <img class="media" src="assets/philosophy-villa.jpg" alt="Modern Mediterranean limestone villa architecture">
         <div class="philosophy-image-caption">Sunrock Residences · Germasogeia</div>
       </div>
     </div>
@@ -483,11 +503,11 @@ footer {
     </div>
 
     <div class="bento reveal">
-      <div class="bento-tile wide tall"><div class="media" data-caption="Where the hills meet the sea"></div><div class="tile-label">Overview</div></div>
-      <div class="bento-tile"><div class="media" data-caption="Living room"></div><div class="tile-label">Living</div></div>
-      <div class="bento-tile"><div class="media" data-caption="Master bedroom"></div><div class="tile-label">Bedroom</div></div>
-      <div class="bento-tile"><div class="media" data-caption="Panoramic view"></div><div class="tile-label">View</div></div>
-      <div class="bento-tile"><div class="media light" data-caption="Type 02 Roof Garden floor plan"></div><div class="tile-label" style="color:var(--navy)">Floor plan</div></div>
+      <div class="bento-tile wide tall"><img class="media" src="assets/sunrock-location.png" alt="Sunrock — Limassol coastline meets Germasogeia hills"><div class="tile-label">Overview</div></div>
+      <div class="bento-tile"><img class="media" src="assets/sunrock-living.png" alt="Sunrock living room interior"><div class="tile-label">Living</div></div>
+      <div class="bento-tile"><img class="media" src="assets/sunrock-bedroom.png" alt="Sunrock master bedroom"><div class="tile-label">Bedroom</div></div>
+      <div class="bento-tile"><img class="media" src="assets/sunrock-view.png" alt="Sunrock residence interior with panoramic Limassol view"><div class="tile-label">View</div></div>
+      <div class="bento-tile"><img class="media light" src="assets/sunrock-floorplan.png" style="object-fit:contain" alt="Sunrock Type 02 Roof Garden floor plan"><div class="tile-label" style="color:var(--navy)">Floor plan</div></div>
     </div>
   </div>
 </section>
@@ -505,7 +525,7 @@ footer {
 
     <div class="portfolio-bento reveal">
       <div class="portfolio-card featured bento-tile">
-        <div class="media" data-caption="Sunrock — infinity pool, sea view"></div>
+        <img class="media" src="assets/sunrock-card.jpg" alt="Sunrock Residences architecture with infinity pool and sea view">
         <div class="portfolio-card-content">
           <div class="portfolio-status">Flagship · Under Construction</div>
           <div class="portfolio-card-title">Sunrock Residences</div>
@@ -513,7 +533,7 @@ footer {
         </div>
       </div>
       <div class="portfolio-card bento-tile">
-        <div class="media" data-caption="Coastal Development"></div>
+        <img class="media" src="assets/coastal-development.jpg" alt="Cyprus coastline — upcoming coastal development" style="opacity:0.75">
         <div class="portfolio-card-content">
           <div class="portfolio-status outline">Coming Soon</div>
           <div class="portfolio-card-title">Coastal<br>Development</div>
@@ -521,7 +541,7 @@ footer {
         </div>
       </div>
       <div class="portfolio-card bento-tile">
-        <div class="media" data-caption="Private Residential Concept"></div>
+        <img class="media" src="assets/private-residential-concept.jpg" alt="Limassol hills — private residential concept" style="opacity:0.6">
         <div class="portfolio-card-content">
           <div class="portfolio-status outline">In Planning</div>
           <div class="portfolio-card-title">Private Residential<br>Concept</div>
@@ -536,7 +556,7 @@ footer {
 <section id="excellence">
   <div class="section-inner">
     <div class="excellence-grid">
-      <div class="excellence-image reveal"><div class="media" data-caption="Precision and natural materials"></div></div>
+      <div class="excellence-image reveal"><img class="media" src="assets/precision-materials.webp" alt="Cyprus architecture — precision and natural materials"></div>
       <div>
         <div class="eyebrow">Standards</div>
         <h2 class="display-caps" style="text-transform:none;font-size:clamp(28px,3.5vw,42px);">Product excellence,<br>from the <em>inside out.</em></h2>
@@ -636,7 +656,7 @@ footer {
     </div>
     <div class="journal-grid reveal">
       <a href="#" class="journal-card">
-        <div class="journal-card-image"><div class="media" data-caption="Sunrock construction progress"></div></div>
+        <div class="journal-card-image"><img class="media" src="assets/sunrock-card.jpg" alt="Sunrock Residences construction progress"></div>
         <div class="journal-card-body">
           <div class="journal-card-meta"><span>Project update</span><span class="journal-card-dot"></span><span>April 2026</span><span class="journal-card-dot"></span><span>5 min read</span></div>
           <div class="journal-card-title">Sunrock Residences — construction milestones reached this spring.</div>
@@ -645,7 +665,7 @@ footer {
         </div>
       </a>
       <a href="#" class="journal-card">
-        <div class="journal-card-image"><div class="media" data-caption="Limassol property market"></div></div>
+        <div class="journal-card-image"><img class="media" src="assets/sunrock-view.png" alt="Limassol property market analysis"></div>
         <div class="journal-card-body">
           <div class="journal-card-meta"><span>Market view</span><span class="journal-card-dot"></span><span>March 2026</span><span class="journal-card-dot"></span><span>8 min read</span></div>
           <div class="journal-card-title">Why Limassol remains the most resilient address in Cyprus real estate.</div>
@@ -654,7 +674,7 @@ footer {
         </div>
       </a>
       <a href="#" class="journal-card">
-        <div class="journal-card-image"><div class="media" data-caption="Material craftsmanship"></div></div>
+        <div class="journal-card-image"><img class="media" src="assets/sunrock-location.png" alt="Material craftsmanship"></div>
         <div class="journal-card-body">
           <div class="journal-card-meta"><span>Philosophy</span><span class="journal-card-dot"></span><span>February 2026</span><span class="journal-card-dot"></span><span>6 min read</span></div>
           <div class="journal-card-title">Selecting materials that age with grace, not against time.</div>
@@ -668,7 +688,7 @@ footer {
 
 <!-- CTA -->
 <section id="cta">
-  <div class="cta-bg"><div class="media" data-caption="Limassol coastline at night"></div></div>
+  <div class="cta-bg"><img class="media" src="assets/limassol-coastline-night.jpg" alt="Limassol Cyprus — coastline at night"></div>
   <div class="section-inner cta-content">
     <div class="eyebrow">Begin here</div>
     <h2 class="cta-headline">Begin with a<br><em>private conversation.</em></h2>
