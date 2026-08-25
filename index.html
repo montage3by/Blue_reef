@@ -207,15 +207,28 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* ── CREDIBILITY (stat badges — the pill exception) ─── */
 #credibility { background: var(--navy-mid); }
+.meander-divider {
+  height: 26px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 24 V6 H6 V18 H18 V6 H24' fill='none' stroke='%23c4a87a' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: 22px 22px;
+  opacity: 0.4;
+}
+.philosophy-column-motif {
+  position: absolute; left: -38px; bottom: -28px; width: 76px; height: 220px;
+  color: var(--sand); opacity: 0.16; pointer-events: none; z-index: 0;
+}
 .credibility-headline { text-align: center; max-width: 720px; margin: 0 auto 64px; font-size: clamp(28px,3.5vw,40px); }
 .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 .stat-item { text-align: center; }
 .stat-number-badge {
-  display: inline-flex; align-items: baseline; gap: 2px;
+  display: inline-flex; align-items: baseline; gap: 3px;
   background: var(--sand); color: var(--on-sand); border-radius: var(--r-pill);
-  padding: 10px 22px; font-family: var(--serif); font-size: 30px; margin-bottom: 16px;
+  padding: 12px 26px; font-family: var(--sans); font-weight: 400; font-size: 28px;
+  font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.01em; margin-bottom: 16px;
 }
-.stat-suffix { font-size: 16px; }
+.stat-suffix { font-size: 15px; font-weight: 300; }
 .stat-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone-light); }
 
 /* ── SUNROCK (bento) ───────────────────────────────── */
@@ -463,11 +476,25 @@ footer {
       <div class="philosophy-image reveal">
         <img class="media" src="assets/philosophy-villa.jpg" alt="Modern Mediterranean limestone villa architecture">
         <div class="philosophy-image-caption">Sunrock Residences · Germasogeia</div>
+        <svg class="philosophy-column-motif" viewBox="0 0 76 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="4" y="4" width="68" height="8" stroke="currentColor" stroke-width="1"/>
+          <path d="M14 12 Q38 26 62 12" stroke="currentColor" stroke-width="1"/>
+          <path d="M17 26 C11 90 11 140 6 204" stroke="currentColor" stroke-width="1"/>
+          <path d="M59 26 C65 90 65 140 70 204" stroke="currentColor" stroke-width="1"/>
+          <line x1="24" y1="26" x2="20" y2="204" stroke="currentColor" stroke-width="0.6"/>
+          <line x1="31" y1="26" x2="29" y2="204" stroke="currentColor" stroke-width="0.6"/>
+          <line x1="38" y1="26" x2="38" y2="204" stroke="currentColor" stroke-width="0.6"/>
+          <line x1="45" y1="26" x2="47" y2="204" stroke="currentColor" stroke-width="0.6"/>
+          <line x1="52" y1="26" x2="56" y2="204" stroke="currentColor" stroke-width="0.6"/>
+          <rect x="0" y="204" width="76" height="7" stroke="currentColor" stroke-width="1"/>
+          <rect x="8" y="211" width="60" height="5" stroke="currentColor" stroke-width="1"/>
+        </svg>
       </div>
     </div>
   </div>
 </section>
 
+<div class="meander-divider"></div>
 <!-- CREDIBILITY -->
 <section id="credibility">
   <div class="section-inner">
@@ -540,7 +567,7 @@ footer {
           <div class="portfolio-card-location">Cyprus coastline — details withheld</div>
         </div>
       </div>
-      <div class="portfolio-card bento-tile">
+      <div class="portfolio-card bento-tile" style="grid-column:1/-1;">
         <img class="media" src="assets/private-residential-concept.jpg" alt="Limassol hills — private residential concept" style="opacity:0.6">
         <div class="portfolio-card-content">
           <div class="portfolio-status outline">In Planning</div>
