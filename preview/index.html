@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0d1b2a">
+<title>BLUE REEF Developments — Cyprus</title>
+<style>
+@font-face {
+  font-family: 'Adelle Sans';
+  src: url('/uploads/AdelleSans-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Adelle Sans';
+  src: url('/uploads/AdelleSans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/uploads/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── TOKENS (from DESIGN.md) ───────────────────────── */
+:root {
+  --navy:        #0d1b2a;
+  --navy-mid:    #1a2e42;
+  --navy-deep:   #08131e;
+  --cream:       #f8f4ee;
+  --cream-dark:  #ede8e0;
+  --sand:        #c4a87a;
+  --sand-light:  #ddd0b8;
+  --sand-hover:  #d4bc93;
+  --stone:       #8a8780;
+  --stone-light: #b5b2ac;
+  --gold:        #b8915a;
+  --white:       #fdfcfa;
+  --on-sand:     #0d1b2a;
+  --hairline:        rgba(196,168,122,0.18);
+  --hairline-strong: rgba(196,168,122,0.32);
+  --overlay:     rgba(13,27,42,0.72);
+
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'Adelle Sans', system-ui, sans-serif;
+
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --section-pad: 120px;
+
+  --r-none: 0px;
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-pill: 9999px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img, .media { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: var(--r-none); }
+a { color: inherit; }
+.section-inner { max-width: 1360px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 64px); }
+section { padding: var(--section-pad) 0; position: relative; }
+
+/* placeholder photography — swap these divs for real <img> assets */
+.media {
+  background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 60%, #10202f 100%);
+  position: relative;
+}
+.media::after {
+  content: attr(data-caption);
+  position: absolute; left: 16px; bottom: 12px;
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--stone-light); opacity: 0.55;
+}
+.media.light { background: linear-gradient(135deg, var(--cream-dark) 0%, var(--cream) 60%, #e6ded0 100%); }
+.media.light::after { color: var(--stone); }
+
+/* ── EYEBROW / LABEL ────────────────────────────────── */
+.eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--sans); font-size: 11px; font-weight: 400;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--sand);
+  margin-bottom: 20px;
+}
+.eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--sand); }
+
+/* ── HEADLINES ──────────────────────────────────────── */
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; color: var(--cream); }
+h2 em, h1 em { font-style: italic; }
+.display-caps {
+  font-size: clamp(32px, 4.5vw, 56px);
+  letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.1;
+}
+p { font-family: var(--sans); font-weight: 300; line-height: 1.6; color: var(--stone-light); }
+
+/* ── BUTTONS (0–2px radius, uppercase, tracked) ────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--sans); font-size: 12px; font-weight: 400;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 16px 32px; border-radius: var(--r-xs);
+  text-decoration: none; transition: background 0.3s, color 0.3s, border-color 0.3s;
+  cursor: pointer; border: none;
+}
+.btn-primary { background: var(--sand); color: var(--on-sand); }
+.btn-primary:hover { background: var(--sand-hover); }
+.btn-ghost { background: transparent; color: var(--cream); border: 1px solid var(--hairline-strong); }
+.btn-ghost:hover { border-color: var(--sand); color: var(--sand); }
+.btn-dark { background: var(--navy); color: var(--cream); padding: 14px 28px; }
+.btn-dark:hover { background: var(--navy-mid); }
+
+/* ── HEADER ─────────────────────────────────────────── */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 28px clamp(24px, 5vw, 64px);
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.4s, padding 0.4s, border-color 0.4s;
+  border-bottom: 1px solid transparent;
+}
+#header.scrolled {
+  background: rgba(13,27,42,0.92); backdrop-filter: blur(12px);
+  padding-top: 16px; padding-bottom: 16px; border-color: var(--hairline);
+}
+.header-logo {
+  font-family: var(--serif); font-size: 15px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--white); text-decoration: none; line-height: 1;
+}
+.header-logo span {
+  display: block; font-size: 8px; letter-spacing: 0.5em; font-weight: 300;
+  font-family: var(--sans); margin-top: 4px; opacity: 0.7;
+}
+nav { display: flex; align-items: center; gap: clamp(20px, 3vw, 44px); }
+nav a {
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(248,244,238,0.75); text-decoration: none; transition: color 0.3s;
+}
+nav a:hover { color: var(--sand); }
+.header-cta { display: flex; align-items: center; gap: 24px; }
+.nav-mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 10px; }
+
+/* ── MOBILE NAV ─────────────────────────────────────── */
+.mobile-nav {
+  position: fixed; inset: 0; z-index: 200; background: var(--navy);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+  transform: translateX(100%); transition: transform 0.4s var(--ease-cinematic);
+}
+.mobile-nav.open { transform: translateX(0); }
+.mobile-nav nav { flex-direction: column; gap: 28px; }
+.mobile-nav nav a { font-family: var(--serif); font-size: 26px; letter-spacing: 0.02em; text-transform: none; color: var(--cream); }
+.mobile-nav-close { position: absolute; top: 24px; right: 24px; background: none; border: none; color: var(--cream); cursor: pointer; padding: 10px; }
+
+/* ── FOCUS STATES ───────────────────────────────────── */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--sand); outline-offset: 3px;
+}
+.contact-form input:focus-visible, .contact-form textarea:focus-visible { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,145,90,0.18); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ── HERO ───────────────────────────────────────────── */
+#hero { min-height: 100vh; display: flex; align-items: flex-end; padding-bottom: 100px; padding-top: 140px; }
+.hero-bg { position: absolute; inset: 0; z-index: -1; }
+.hero-bg .media { height: 100%; }
+.hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(13,27,42,0.35) 0%, rgba(13,27,42,0.55) 55%, var(--navy) 100%);
+}
+.hero-content { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; width: 100%; }
+.hero-content .section-inner { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; width: 100%; }
+.hero-headline { font-size: clamp(44px, 6.5vw, 88px); line-height: 1.05; letter-spacing: 0.01em; max-width: 780px; }
+.hero-sub { max-width: 480px; font-size: 18px; margin: 28px 0 40px; color: var(--sand-light); }
+.hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+.hero-right { text-align: right; flex-shrink: 0; }
+.hero-flag { font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--cream); }
+.hero-location { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--stone-light); margin-top: 8px; }
+
+/* ── PHILOSOPHY ─────────────────────────────────────── */
+.philosophy-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 72px; align-items: center; }
+.philosophy-body { font-size: 19px; max-width: 480px; margin: 24px 0 40px; }
+.value-cards { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }
+.value-card { background: var(--navy); padding: 24px; }
+.value-card-title { font-family: var(--sans); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand); margin-bottom: 8px; }
+.value-card-body { font-size: 14px; }
+.philosophy-image { aspect-ratio: 4/5; position: relative; }
+.philosophy-image-caption {
+  position: absolute; left: 20px; bottom: 20px; font-size: 11px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--cream); background: rgba(13,27,42,0.6); padding: 8px 14px;
+}
+
+/* ── CREDIBILITY (stat badges — the pill exception) ─── */
+#credibility { background: var(--navy-mid); }
+.meander-divider {
+  height: 26px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 24 V6 H6 V18 H18 V6 H24' fill='none' stroke='%23c4a87a' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: 22px 22px;
+  opacity: 0.4;
+}
+.philosophy-column-photo {
+  position: absolute; left: -64px; bottom: -32px; width: 150px; height: auto;
+  opacity: 0.85; z-index: 1; pointer-events: none;
+  filter: sepia(0.18) saturate(0.65) brightness(0.92) drop-shadow(0 18px 26px rgba(8,19,30,0.55));
+  -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
+}
+@media (max-width: 640px) {
+  .philosophy-column-photo { left: -28px; width: 90px; }
+}
+#credibility { position: relative; overflow: hidden; }
+#credibility .section-inner { position: relative; z-index: 1; }
+.credibility-helmet-photo {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -52%);
+  width: 380px; max-width: 55vw; z-index: 0; pointer-events: none;
+  opacity: 0.08; filter: grayscale(1) brightness(1.6);
+}
+.excellence-image { position: relative; }
+.excellence-bust-photo {
+  position: absolute; right: -34px; bottom: -28px; width: 168px; height: auto;
+  z-index: 2; pointer-events: none;
+  filter: sepia(0.14) saturate(0.7) brightness(0.96) drop-shadow(0 20px 30px rgba(8,19,30,0.5));
+}
+@media (max-width: 640px) {
+  .excellence-bust-photo { width: 110px; right: -14px; bottom: -14px; }
+}
+.credibility-headline { text-align: center; max-width: 720px; margin: 0 auto 64px; font-size: clamp(28px,3.5vw,40px); }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.stat-item { text-align: center; }
+.stat-number-badge {
+  display: inline-flex; align-items: baseline; gap: 3px;
+  background: var(--sand); color: var(--on-sand); border-radius: var(--r-pill);
+  padding: 12px 26px; font-family: var(--sans); font-weight: 400; font-size: 28px;
+  font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.01em; margin-bottom: 16px;
+}
+.stat-suffix { font-size: 15px; font-weight: 300; }
+.stat-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone-light); }
+
+/* ── SUNROCK (bento) ───────────────────────────────── */
+.sunrock-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-bottom: 56px; }
+.sunrock-headline { font-size: clamp(30px, 4vw, 44px); }
+.sunrock-desc { font-size: 17px; margin: 20px 0 32px; }
+.sunrock-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 24px; margin-bottom: 32px; }
+.fact-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--stone); margin-bottom: 6px; }
+.fact-value { font-size: 14px; color: var(--cream); }
+.btn-link { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sand); text-decoration: none; border-bottom: 1px solid var(--sand); padding-bottom: 4px; }
+
+.bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 220px; gap: 2px; background: var(--hairline); border: 1px solid var(--hairline); }
+.bento-tile {
+  position: relative; overflow: hidden; background: var(--navy-mid);
+  transition: transform 0.5s var(--ease-cinematic);
+}
+.bento-tile:hover { transform: scale(1.03); z-index: 2; }
+.bento-tile .media { position: absolute; inset: 0; }
+.bento-tile .tile-label {
+  position: absolute; left: 20px; top: 20px; z-index: 2;
+  font-family: var(--sans); font-size: 14px; color: var(--cream);
+}
+.bento-tile.wide { grid-column: span 2; }
+.bento-tile.tall { grid-row: span 2; }
+
+/* ── PORTFOLIO (asymmetric bento) ──────────────────── */
+.portfolio-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 56px; flex-wrap: wrap; }
+.portfolio-desc { max-width: 380px; font-size: 15px; }
+.portfolio-bento { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 340px; gap: 2px; background: var(--hairline); border: 1px solid var(--hairline); }
+.portfolio-card { grid-column: span 1; }
+.portfolio-card.featured { grid-column: span 2; }
+.portfolio-status {
+  display: inline-block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--on-sand); background: var(--sand); border-radius: var(--r-pill);
+  padding: 5px 14px; margin-bottom: 12px;
+}
+.portfolio-status.outline { background: transparent; color: var(--cream); border: 1px solid var(--hairline-strong); }
+.portfolio-card-content { position: absolute; left: 24px; right: 24px; bottom: 24px; z-index: 2; }
+.portfolio-card-title { font-family: var(--serif); font-size: 26px; margin-bottom: 6px; }
+.portfolio-card-location { font-size: 12px; color: var(--stone-light); }
+
+/* ── EXCELLENCE ─────────────────────────────────────── */
+.excellence-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 72px; align-items: center; }
+.excellence-image { aspect-ratio: 4/5; }
+.excellence-items { display: flex; flex-direction: column; gap: 28px; margin-top: 36px; }
+.excellence-item { display: flex; gap: 20px; border-top: 1px solid var(--hairline); padding-top: 20px; }
+.excellence-num { font-family: var(--serif); font-size: 20px; color: var(--sand); flex-shrink: 0; width: 36px; }
+.excellence-item-title { font-family: var(--sans); font-size: 15px; color: var(--cream); margin-bottom: 6px; }
+.excellence-item-desc { font-size: 14px; }
+
+/* ── LOCATION (tabs pattern) ────────────────────────── */
+#location { background: var(--navy-mid); }
+.location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.location-body { font-size: 17px; margin: 20px 0 36px; max-width: 460px; }
+.location-tabs { display: flex; gap: 32px; border-bottom: 1px solid var(--hairline); margin-bottom: 28px; }
+.loc-tab { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; padding-bottom: 14px; color: var(--stone-light); border-bottom: 1px solid transparent; margin-bottom: -1px; cursor: default; }
+.loc-tab.active { color: var(--cream); border-color: var(--sand); }
+.location-tags { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 32px; }
+.location-tag-dist { font-family: var(--serif); font-size: 22px; color: var(--sand); }
+.location-tag-label { font-size: 12px; color: var(--stone-light); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.map-container { aspect-ratio: 1/0.86; position: relative; }
+.map-container .map-svg { width: 100%; height: 100%; }
+
+/* ── AUDIENCE ───────────────────────────────────────── */
+.audience-headline { text-align: center; max-width: 760px; margin: 0 auto 56px; font-size: clamp(26px, 3.2vw, 38px); }
+.audience-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }
+.audience-item { background: var(--navy); padding: 28px 20px; text-align: left; }
+.audience-item-title { font-family: var(--sans); font-size: 14px; color: var(--cream); margin-bottom: 10px; letter-spacing: 0.02em; }
+.audience-item-desc { font-size: 13px; }
+
+/* ── PROCESS (timeline) ─────────────────────────────── */
+.timeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; margin-top: 56px; }
+.timeline-item { border-top: 1px solid var(--sand); padding-top: 20px; }
+.timeline-num { font-family: var(--serif); font-size: 15px; color: var(--sand); margin-bottom: 12px; }
+.timeline-title { font-family: var(--sans); font-size: 15px; color: var(--cream); margin-bottom: 10px; }
+.timeline-desc { font-size: 13px; }
+
+/* ── JOURNAL (blog bento) ───────────────────────────── */
+#journal { background: var(--navy-mid); }
+.journal-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 20px; }
+.journal-cta-link { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sand); text-decoration: underline; text-underline-offset: 4px; }
+.journal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--hairline); border: 1px solid var(--hairline); }
+.journal-card { background: var(--navy); text-decoration: none; display: block; transition: transform 0.4s var(--ease-cinematic); }
+.journal-card:hover { transform: scale(1.02); }
+.journal-card-image { aspect-ratio: 4/3; }
+.journal-card-body { padding: 24px; }
+.journal-card-meta { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); margin-bottom: 12px; display: flex; gap: 8px; align-items: center; }
+.journal-card-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--stone); }
+.journal-card-title { font-family: var(--serif); font-size: 19px; color: var(--cream); margin-bottom: 10px; line-height: 1.3; }
+.journal-card-desc { font-size: 13px; margin-bottom: 16px; }
+.journal-card-read { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand); }
+
+/* ── CTA ────────────────────────────────────────────── */
+#cta { text-align: center; }
+.cta-bg { position: absolute; inset: 0; z-index: -1; }
+.cta-bg .media { height: 100%; }
+.cta-bg::after { content: ''; position: absolute; inset: 0; background: var(--overlay); }
+.cta-content { max-width: 620px; margin: 0 auto; }
+.cta-content .eyebrow { justify-content: center; }
+.cta-headline { font-size: clamp(30px, 4vw, 48px); }
+.cta-desc { font-size: 17px; margin: 20px auto 40px; max-width: 460px; }
+.cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* ── CONTACT — the ONE light cream section ──────────── */
+#contact { background: var(--cream); color: var(--navy); }
+#contact .eyebrow { color: var(--gold); }
+#contact .eyebrow::before { background: var(--gold); }
+#contact h2 { color: var(--navy); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+.contact-headline { font-size: clamp(30px, 4vw, 44px); }
+.contact-desc { color: #4a4740; font-size: 17px; margin: 20px 0 36px; max-width: 460px; }
+.contact-detail {
+  display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--navy);
+  padding: 18px 0; border-top: 1px solid rgba(13,27,42,0.12);
+}
+.contact-detail:last-of-type { border-bottom: 1px solid rgba(13,27,42,0.12); }
+.contact-detail-icon {
+  width: 40px; height: 40px; border-radius: var(--r-sm); background: var(--cream-dark);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.contact-detail-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stone); margin-bottom: 3px; }
+.contact-detail-value { font-family: var(--serif); font-size: 17px; }
+.contact-form { background: var(--white); border-radius: var(--r-sm); padding: 40px; box-shadow: 0 24px 60px -20px rgba(13,27,42,0.15); }
+.contact-form input, .contact-form textarea {
+  width: 100%; border: none; border-bottom: 1px solid rgba(13,27,42,0.15); background: transparent;
+  padding: 14px 0; margin-bottom: 24px; font-family: var(--sans); font-size: 15px; color: var(--navy);
+}
+.contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--gold); }
+.contact-form label { display: block; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stone); margin-bottom: 8px; }
+
+/* ── FOOTER ─────────────────────────────────────────── */
+footer {
+  background: var(--navy-deep);
+  padding: 96px clamp(24px, 5vw, 64px) 48px;
+}
+.footer-inner { max-width: 1360px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr repeat(4, 0.8fr) 1.4fr; gap: 32px; }
+.footer-logo { font-family: var(--serif); font-size: 18px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); }
+.footer-logo-sub { font-size: 11px; color: var(--stone-light); margin-top: 8px; letter-spacing: 0.05em; }
+.footer-col-title { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--stone); margin-bottom: 18px; }
+.footer-col a { display: block; font-size: 13px; color: var(--stone-light); text-decoration: none; margin-bottom: 12px; transition: color 0.3s; }
+.footer-col a:hover { color: var(--sand); }
+.footer-phone { font-family: var(--serif); font-size: 24px; color: var(--sand); margin-bottom: 20px; display: block; text-decoration: none; }
+.footer-icons { display: flex; gap: 10px; margin-top: 24px; }
+.footer-icon-btn {
+  width: 40px; height: 40px; border: 1px solid var(--hairline); border-radius: var(--r-xs);
+  display: flex; align-items: center; justify-content: center; color: var(--cream); text-decoration: none;
+}
+.footer-legal { max-width: 1360px; margin: 64px auto 0; padding-top: 32px; border-top: 1px solid var(--hairline);
+  font-size: 12px; color: var(--stone); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-legal a { color: var(--stone-light); text-decoration: underline; }
+
+/* ── REVEAL ANIMATION ───────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .philosophy-grid, .excellence-grid, .location-grid, .contact-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .audience-grid { grid-template-columns: repeat(2, 1fr); }
+  .timeline { grid-template-columns: repeat(2, 1fr); }
+  .bento, .portfolio-bento { grid-template-columns: repeat(2, 1fr); }
+  .bento-tile.wide, .portfolio-card.featured { grid-column: span 2; }
+  .journal-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  #header nav { display: none; }
+  .nav-mobile-toggle { display: block; }
+}
+@media (max-width: 640px) {
+  .audience-grid, .footer-inner { grid-template-columns: 1fr; }
+  .timeline, .sunrock-facts, .location-tags { grid-template-columns: 1fr; }
+  .header-cta .btn { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <a href="#" class="header-logo">Blue Reef<span>Developments</span></a>
+  <nav>
+    <a href="#philosophy">Philosophy</a>
+    <a href="#sunrock">Developments</a>
+    <a href="#sunrock">Sunrock</a>
+    <a href="#location">Location</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="header-cta">
+    <a href="#contact" class="btn btn-primary">Private Introduction</a>
+  </div>
+  <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav" id="mobileNavToggle">
+    <svg width="22" height="14" viewBox="0 0 22 14" fill="none"><line x1="0" y1="1" x2="22" y2="1" stroke="white" stroke-width="1.2"/><line x1="0" y1="7" x2="22" y2="7" stroke="white" stroke-width="1.2"/><line x1="0" y1="13" x2="22" y2="13" stroke="white" stroke-width="1.2"/></svg>
+  </button>
+</header>
+
+<!-- MOBILE NAV -->
+<div id="mobileNav" class="mobile-nav" role="dialog" aria-modal="true" aria-label="Site navigation">
+  <button class="mobile-nav-close" aria-label="Close menu" id="mobileNavClose">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="1.2"/><line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="1.2"/></svg>
+  </button>
+  <nav>
+    <a href="#philosophy">Philosophy</a>
+    <a href="#sunrock">Developments</a>
+    <a href="#location">Location</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a href="#contact" class="btn btn-primary">Private Introduction</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"><video class="media" autoplay muted loop playsinline preload="auto"><source src="/assets/hero-video.mp4" type="video/mp4"></video></div>
+  <div class="hero-content">
+    <div class="section-inner">
+      <div>
+        <h1 class="hero-headline">Deep development<br><em>that leads.</em></h1>
+        <p class="hero-sub">A developer setting new standards for high-end living in Cyprus — through product excellence, foresight and enduring value.</p>
+        <div class="hero-ctas">
+          <a href="#sunrock" class="btn btn-primary">Explore our developments</a>
+          <a href="#contact" class="btn btn-ghost">Request a private introduction</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-flag">Cyprus</div>
+        <div class="hero-location">Limassol · Germasogeia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="section-inner">
+    <div class="philosophy-grid">
+      <div class="reveal">
+        <div class="eyebrow">Our approach</div>
+        <h2 class="display-caps" style="text-transform:none;font-size:clamp(28px,3.5vw,42px);">Built with depth.<br><em>Designed to endure.</em></h2>
+        <p class="philosophy-body">Every BLUE REEF project begins with the product itself — architecture, engineering, materials and the long-term value it creates. We build through excellence, not price competition.</p>
+        <div class="value-cards">
+          <div class="value-card"><div class="value-card-title">Product First</div><div class="value-card-body">Architecture, materials and engineering drive every decision before commercial considerations enter the room.</div></div>
+          <div class="value-card"><div class="value-card-title">Enduring Vision</div><div class="value-card-body">We develop for the decades ahead — building assets that appreciate in quality and value as time passes.</div></div>
+          <div class="value-card"><div class="value-card-title">Integrity &amp; Responsibility</div><div class="value-card-body">Founder-led decisions. Transparent process. A personal commitment to every project we undertake.</div></div>
+        </div>
+      </div>
+      <div class="philosophy-image reveal">
+        <img class="media" src="/assets/philosophy-villa.jpg" alt="Modern Mediterranean limestone villa architecture">
+        <div class="philosophy-image-caption">Sunrock Residences · Germasogeia</div>
+        <img class="philosophy-column-photo" src="/assets/greek-column.png" alt="" aria-hidden="true">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="meander-divider"></div>
+<!-- CREDIBILITY -->
+<section id="credibility">
+  <img class="credibility-helmet-photo" src="/assets/greek-helmet.png" alt="" aria-hidden="true">
+  <div class="section-inner">
+    <div class="eyebrow" style="justify-content:center;">Track record</div>
+    <h2 class="credibility-headline">A developer defined by<br><em>depth and precision.</em></h2>
+    <div class="stats-grid">
+      <div class="stat-item reveal"><div class="stat-number-badge"><span class="counter" data-target="60">60</span><span class="stat-suffix">+</span></div><div class="stat-label">Successful international<br>projects</div></div>
+      <div class="stat-item reveal"><div class="stat-number-badge"><span class="counter" data-target="46">46</span></div><div class="stat-label">Residences at<br>Sunrock, Limassol</div></div>
+      <div class="stat-item reveal"><div class="stat-number-badge"><span class="counter" data-target="100">100</span><span class="stat-suffix">%</span></div><div class="stat-label">Founder-led<br>decisions</div></div>
+      <div class="stat-item reveal"><div class="stat-number-badge"><span class="counter" data-target="5">5</span><span class="stat-suffix"> min</span></div><div class="stat-label">To Limassol<br>coastline</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SUNROCK -->
+<section id="sunrock">
+  <div class="section-inner">
+    <div class="eyebrow">Flagship project</div>
+    <div class="sunrock-intro">
+      <div class="reveal"><h2 class="sunrock-headline">Sunrock Residences.<br><em>Living to new heights.</em></h2></div>
+      <div class="reveal">
+        <p class="sunrock-desc">A high-end residential complex in the Germasogeia hills, overlooking the sea. Elevated above the coastline, where the sea and mountains meet in one continuous view.</p>
+        <div class="sunrock-facts">
+          <div><div class="fact-label">Location</div><div class="fact-value">Germasogeia, Limassol</div></div>
+          <div><div class="fact-label">Residences</div><div class="fact-value">46 apartments &amp; penthouses</div></div>
+          <div><div class="fact-label">Views</div><div class="fact-value">Sea &amp; mountain panorama</div></div>
+          <div><div class="fact-label">Amenities</div><div class="fact-value">Resort-style, full-service</div></div>
+          <div><div class="fact-label">Coast</div><div class="fact-value">5-minute drive</div></div>
+          <div><div class="fact-label">Status</div><div class="fact-value">Under construction</div></div>
+        </div>
+        <a href="#contact" class="btn-link">View project details</a>
+      </div>
+    </div>
+
+    <div class="bento reveal">
+      <div class="bento-tile wide tall"><img class="media" src="/assets/sunrock-location.png" alt="Sunrock — Limassol coastline meets Germasogeia hills"><div class="tile-label">Overview</div></div>
+      <div class="bento-tile"><img class="media" src="/assets/sunrock-living.png" alt="Sunrock living room interior"><div class="tile-label">Living</div></div>
+      <div class="bento-tile"><img class="media" src="/assets/sunrock-bedroom.png" alt="Sunrock master bedroom"><div class="tile-label">Bedroom</div></div>
+      <div class="bento-tile"><img class="media" src="/assets/sunrock-view.png" alt="Sunrock residence interior with panoramic Limassol view"><div class="tile-label">View</div></div>
+      <div class="bento-tile"><img class="media light" src="/assets/sunrock-floorplan.png" style="object-fit:contain" alt="Sunrock Type 02 Roof Garden floor plan"><div class="tile-label" style="color:var(--navy)">Floor plan</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-inner">
+    <div class="portfolio-header">
+      <div>
+        <div class="eyebrow">Developments</div>
+        <h2 class="display-caps" style="text-transform:none;font-size:clamp(28px,3.5vw,42px);">Current and upcoming<br><em>developments.</em></h2>
+      </div>
+      <p class="portfolio-desc">BLUE REEF selects sites with precision and develops with patience. Each project is positioned for enduring value in its market.</p>
+    </div>
+
+    <div class="portfolio-bento reveal">
+      <div class="portfolio-card featured bento-tile">
+        <img class="media" src="/assets/sunrock-card.jpg" alt="Sunrock Residences architecture with infinity pool and sea view">
+        <div class="portfolio-card-content">
+          <div class="portfolio-status">Flagship · Under Construction</div>
+          <div class="portfolio-card-title">Sunrock Residences</div>
+          <div class="portfolio-card-location">Germasogeia, Limassol · 46 residences</div>
+        </div>
+      </div>
+      <div class="portfolio-card bento-tile">
+        <img class="media" src="/assets/coastal-development.jpg" alt="Cyprus coastline — upcoming coastal development" style="opacity:0.75">
+        <div class="portfolio-card-content">
+          <div class="portfolio-status outline">Coming Soon</div>
+          <div class="portfolio-card-title">Coastal<br>Development</div>
+          <div class="portfolio-card-location">Cyprus coastline — details withheld</div>
+        </div>
+      </div>
+      <div class="portfolio-card bento-tile">
+        <img class="media" src="/assets/private-residential-concept.jpg" alt="Limassol hills — private residential concept" style="opacity:0.6">
+        <div class="portfolio-card-content">
+          <div class="portfolio-status outline">In Planning</div>
+          <div class="portfolio-card-title">Private Residential<br>Concept</div>
+          <div class="portfolio-card-location">Limassol hills — confidential</div>
+        </div>
+      </div>
+      <div class="portfolio-card featured bento-tile">
+        <img class="media" src="/assets/hero-aerial-sunset.jpg" alt="Cyprus — early-stage acquisition site" style="opacity:0.65">
+        <div class="portfolio-card-content">
+          <div class="portfolio-status outline">Early Discussions</div>
+          <div class="portfolio-card-title">Land Acquisition<br>in Progress</div>
+          <div class="portfolio-card-location">Southern Cyprus — location undisclosed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXCELLENCE -->
+<section id="excellence">
+  <div class="section-inner">
+    <div class="excellence-grid">
+      <div class="excellence-image reveal">
+        <img class="media" src="/assets/precision-materials.webp" alt="Cyprus architecture — precision and natural materials">
+        <img class="excellence-bust-photo" src="/assets/greek-bust-apollo.png" alt="" aria-hidden="true">
+      </div>
+      <div>
+        <div class="eyebrow">Standards</div>
+        <h2 class="display-caps" style="text-transform:none;font-size:clamp(28px,3.5vw,42px);">Product excellence,<br>from the <em>inside out.</em></h2>
+        <div class="excellence-items">
+          <div class="excellence-item"><div class="excellence-num">01</div><div><div class="excellence-item-title">Architecture with restraint</div><div class="excellence-item-desc">Design that serves the resident, not the render. Clean lines, natural materials, considered proportions.</div></div></div>
+          <div class="excellence-item"><div class="excellence-num">02</div><div><div class="excellence-item-title">Engineering for longevity</div><div class="excellence-item-desc">Structures built to exceed standards — because high-end living demands high-end infrastructure.</div></div></div>
+          <div class="excellence-item"><div class="excellence-num">03</div><div><div class="excellence-item-title">Materials selected for endurance</div><div class="excellence-item-desc">Italian fixtures, Spanish engineered wood, natural stone, silk finishes.</div></div></div>
+          <div class="excellence-item"><div class="excellence-num">04</div><div><div class="excellence-item-title">Amenities shaped for daily life</div><div class="excellence-item-desc">Infinity pool, fitness and spa, underground parking with EV charging, 24/7 security and concierge.</div></div></div>
+          <div class="excellence-item"><div class="excellence-num">05</div><div><div class="excellence-item-title">Property management and care</div><div class="excellence-item-desc">BLUE REEF remains present after delivery — protecting the long-term value of every residence.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="section-inner">
+    <div class="location-grid">
+      <div>
+        <div class="eyebrow">Where we build</div>
+        <h2 class="display-caps" style="text-transform:none;font-size:clamp(28px,3.5vw,42px);">A quieter perspective<br>on <em>Mediterranean living.</em></h2>
+        <p class="location-body">Close to the city, connected to nature, elevated above the coastline. A place for people who value privacy, design, comfort and calm.</p>
+        <div class="location-tabs">
+          <div class="loc-tab active">Distances</div>
+          <div class="loc-tab">Neighbourhood</div>
+          <div class="loc-tab">Access</div>
+        </div>
+        <div class="location-tags">
+          <div><div class="location-tag-dist">5 min</div><div class="location-tag-label">Limassol coastline</div></div>
+          <div><div class="location-tag-dist">10 min</div><div class="location-tag-label">City centre</div></div>
+          <div><div class="location-tag-dist">12 min</div><div class="location-tag-label">International schools</div></div>
+          <div><div class="location-tag-dist">45 min</div><div class="location-tag-label">Larnaca airport</div></div>
+          <div><div class="location-tag-dist">18 min</div><div class="location-tag-label">Business district</div></div>
+          <div><div class="location-tag-dist">2 min</div><div class="location-tag-label">Germasogeia walks</div></div>
+        </div>
+      </div>
+      <div class="map-container reveal">
+        <svg class="map-svg" viewBox="0 0 560 480" xmlns="http://www.w3.org/2000/svg">
+          <rect width="560" height="480" fill="#101d2c"/>
+          <path d="M0,320 Q80,300 160,310 Q240,318 320,305 Q400,295 480,308 Q520,314 560,310 L560,480 L0,480 Z" fill="#1a2e42" opacity="0.6"/>
+          <path d="M0,320 Q80,300 160,310 Q240,318 320,305 Q400,295 480,308 Q520,314 560,310" stroke="#8a8780" stroke-width="1" fill="none" opacity="0.5"/>
+          <path d="M60,280 Q120,260 180,270 Q240,278 300,262 Q360,248 420,258" stroke="#3a4a5c" stroke-width="0.8" fill="none" opacity="0.6"/>
+          <path d="M80,240 Q140,218 200,230 Q270,242 320,222 Q380,205 440,215" stroke="#3a4a5c" stroke-width="0.8" fill="none" opacity="0.5"/>
+          <line x1="280" y1="0" x2="280" y2="480" stroke="#c4a87a" stroke-width="0.8" opacity="0.4" stroke-dasharray="6,4"/>
+          <line x1="0" y1="310" x2="560" y2="310" stroke="#c4a87a" stroke-width="0.8" opacity="0.4" stroke-dasharray="6,4"/>
+          <path d="M220 205 L232 220 L232 236 L208 236 L208 220 Z" fill="#c4a87a"/>
+          <circle cx="220" cy="222" r="22" fill="none" stroke="#c4a87a" stroke-width="0.6" opacity="0.4"/>
+          <circle cx="220" cy="222" r="40" fill="none" stroke="#c4a87a" stroke-width="0.4" opacity="0.25"/>
+          <text x="234" y="217" font-family="'Jost', sans-serif" font-size="9" fill="#f8f4ee" font-weight="400" letter-spacing="2">SUNROCK</text>
+          <text x="234" y="230" font-family="'Jost', sans-serif" font-size="8" fill="#8a8780" font-weight="300" letter-spacing="1.5">GERMASOGEIA</text>
+          <text x="360" y="380" font-family="'Playfair Display', serif" font-size="14" fill="#b5b2ac" font-style="italic" opacity="0.8">Mediterranean Sea</text>
+          <circle cx="340" cy="295" r="3" fill="#8a8780" opacity="0.6"/>
+          <text x="350" y="292" font-family="'Jost', sans-serif" font-size="8" fill="#8a8780" letter-spacing="2" opacity="0.8">LIMASSOL</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="audience">
+  <div class="section-inner">
+    <div class="eyebrow" style="justify-content:center;">Who we build for</div>
+    <h2 class="audience-headline">For those who have nothing to prove —<br>only to <em>live fully.</em></h2>
+    <div class="audience-grid reveal">
+      <div class="audience-item"><div class="audience-item-title">International Families</div><div class="audience-item-desc">Seeking permanence, safety and quality of life in a European Mediterranean climate.</div></div>
+      <div class="audience-item"><div class="audience-item-title">Entrepreneurs &amp; Founders</div><div class="audience-item-desc">People who understand long-term value and invest in environments that reflect their standards.</div></div>
+      <div class="audience-item"><div class="audience-item-title">Expats &amp; Remote Professionals</div><div class="audience-item-desc">Connected to the world, choosing a base where privacy and nature coexist with infrastructure.</div></div>
+      <div class="audience-item"><div class="audience-item-title">Established Local Residents</div><div class="audience-item-desc">Cyprus-rooted individuals upgrading to a residence worthy of a life well-built.</div></div>
+      <div class="audience-item"><div class="audience-item-title">Long-term Investors</div><div class="audience-item-desc">Seeking enduring capital value in a stable jurisdiction, with a developer who thinks in decades.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-inner">
+    <div class="eyebrow">How we work</div>
+    <h2 class="display-caps" style="text-transform:none;font-size:clamp(28px,3.5vw,42px);">Clarity is part<br>of the <em>promise.</em></h2>
+    <div class="timeline reveal">
+      <div class="timeline-item"><div class="timeline-num">01</div><div class="timeline-title">Vision &amp; site selection</div><div class="timeline-desc">Every project begins with the right site — topology, views, access to nature, proximity to the city.</div></div>
+      <div class="timeline-item"><div class="timeline-num">02</div><div class="timeline-title">Architecture &amp; product strategy</div><div class="timeline-desc">Working with architects who understand restraint — designing for the resident's life, not the brochure.</div></div>
+      <div class="timeline-item"><div class="timeline-num">03</div><div class="timeline-title">Engineering &amp; construction</div><div class="timeline-desc">Structural precision, material integrity, craftsmanship built from the foundation up.</div></div>
+      <div class="timeline-item"><div class="timeline-num">04</div><div class="timeline-title">Delivery &amp; ownership support</div><div class="timeline-desc">Transparent handover — every detail explained and documented.</div></div>
+      <div class="timeline-item"><div class="timeline-num">05</div><div class="timeline-title">Long-term property value</div><div class="timeline-desc">Active property management. We protect what we build because our name is attached to it permanently.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section id="journal">
+  <div class="section-inner">
+    <div class="journal-header">
+      <div><div class="eyebrow">Journal</div><h2 class="display-caps" style="text-transform:none;font-size:clamp(28px,3.5vw,40px);">Notes on building<br>for the <em>long term.</em></h2></div>
+      <a href="#" class="journal-cta-link">All articles</a>
+    </div>
+    <div class="journal-grid reveal">
+      <a href="#" class="journal-card">
+        <div class="journal-card-image"><img class="media" src="/assets/sunrock-card.jpg" alt="Sunrock Residences construction progress"></div>
+        <div class="journal-card-body">
+          <div class="journal-card-meta"><span>Project update</span><span class="journal-card-dot"></span><span>April 2026</span><span class="journal-card-dot"></span><span>5 min read</span></div>
+          <div class="journal-card-title">Sunrock Residences — construction milestones reached this spring.</div>
+          <div class="journal-card-desc">A look at the structural progress, material decisions and architectural details now visible on site.</div>
+          <span class="journal-card-read">Read article →</span>
+        </div>
+      </a>
+      <a href="#" class="journal-card">
+        <div class="journal-card-image"><img class="media" src="/assets/sunrock-view.png" alt="Limassol property market analysis"></div>
+        <div class="journal-card-body">
+          <div class="journal-card-meta"><span>Market view</span><span class="journal-card-dot"></span><span>March 2026</span><span class="journal-card-dot"></span><span>8 min read</span></div>
+          <div class="journal-card-title">Why Limassol remains the most resilient address in Cyprus real estate.</div>
+          <div class="journal-card-desc">An analysis of demand, infrastructure investment and long-term capital appreciation.</div>
+          <span class="journal-card-read">Read article →</span>
+        </div>
+      </a>
+      <a href="#" class="journal-card">
+        <div class="journal-card-image"><img class="media" src="/assets/sunrock-location.png" alt="Material craftsmanship"></div>
+        <div class="journal-card-body">
+          <div class="journal-card-meta"><span>Philosophy</span><span class="journal-card-dot"></span><span>February 2026</span><span class="journal-card-dot"></span><span>6 min read</span></div>
+          <div class="journal-card-title">Selecting materials that age with grace, not against time.</div>
+          <div class="journal-card-desc">On Italian fixtures, Spanish engineered wood and the discipline of choosing surfaces that improve with use.</div>
+          <span class="journal-card-read">Read article →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg"><img class="media" src="/assets/limassol-coastline-night.jpg" alt="Limassol Cyprus — coastline at night"></div>
+  <div class="section-inner cta-content">
+    <div class="eyebrow">Begin here</div>
+    <h2 class="cta-headline">Begin with a<br><em>private conversation.</em></h2>
+    <p class="cta-desc">Speak with BLUE REEF about current and upcoming high-end developments in Cyprus.</p>
+    <div class="cta-buttons">
+      <a href="#contact" class="btn btn-primary">Request a private introduction</a>
+      <a href="#sunrock" class="btn btn-ghost">Explore Sunrock Residences</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT — the one light section -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="eyebrow">Get in touch</div>
+        <h2 class="contact-headline">A conversation<br>begins here.</h2>
+        <p class="contact-desc">We are selective about the projects we undertake and the relationships we form. If you are considering high-end residential living in Cyprus, we welcome a quiet conversation.</p>
+        <a href="tel:+35799000000" class="contact-detail">
+          <div class="contact-detail-icon">☎</div>
+          <div><div class="contact-detail-label">Phone</div><div class="contact-detail-value">+357 99 000 000</div></div>
+        </a>
+        <a href="mailto:hello@bluereef.dev" class="contact-detail">
+          <div class="contact-detail-icon">✉</div>
+          <div><div class="contact-detail-label">Email</div><div class="contact-detail-value">hello@bluereef.dev</div></div>
+        </a>
+      </div>
+      <form class="contact-form reveal" onsubmit="return false;">
+        <label for="name">Full name</label>
+        <input id="name" type="text" placeholder="Your name">
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="you@example.com">
+        <label for="message">Message</label>
+        <textarea id="message" rows="4" placeholder="Tell us what you're looking for"></textarea>
+        <button type="submit" class="btn btn-dark" style="width:100%;">Send enquiry</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Blue Reef</div>
+      <div class="footer-logo-sub">Developments · Cyprus</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Developments</div>
+      <a href="#sunrock">Sunrock Residences</a>
+      <a href="#portfolio">Coastal Development</a>
+      <a href="#portfolio">Private Residential Concept</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="#philosophy">Philosophy</a>
+      <a href="#process">How we work</a>
+      <a href="#journal">Journal</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Location</div>
+      <a href="#location">Germasogeia</a>
+      <a href="#location">Limassol</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Legal</div>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+    <div>
+      <a href="tel:+35799000000" class="footer-phone">+357 99 000 000</a>
+      <a href="#contact" class="btn btn-primary" style="padding:14px 28px;">Book a call</a>
+      <div class="footer-icons">
+        <a href="#" class="footer-icon-btn" aria-label="WhatsApp">◐</a>
+        <a href="#" class="footer-icon-btn" aria-label="Telegram">✈</a>
+        <a href="#" class="footer-icon-btn" aria-label="Email">✉</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <span>© 2026 Blue Reef Developments. All rights reserved.</span>
+    <span><a href="#">Privacy Policy</a> · <a href="#">Cookies</a></span>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(function (el) { io.observe(el); });
+
+  var toggle = document.getElementById('mobileNavToggle');
+  var closeBtn = document.getElementById('mobileNavClose');
+  var mobileNav = document.getElementById('mobileNav');
+  function setMobileNav(open) {
+    mobileNav.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  if (toggle) toggle.addEventListener('click', function () { setMobileNav(true); });
+  if (closeBtn) closeBtn.addEventListener('click', function () { setMobileNav(false); });
+  mobileNav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { setMobileNav(false); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setMobileNav(false);
+  });
+});
+</script>
+</body>
+</html>
