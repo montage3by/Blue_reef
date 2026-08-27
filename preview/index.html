@@ -215,9 +215,31 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   background-size: 22px 22px;
   opacity: 0.4;
 }
-.philosophy-column-motif {
-  position: absolute; left: -38px; bottom: -28px; width: 76px; height: 220px;
-  color: var(--sand); opacity: 0.16; pointer-events: none; z-index: 0;
+.philosophy-column-photo {
+  position: absolute; left: -64px; bottom: -32px; width: 150px; height: auto;
+  opacity: 0.85; z-index: 1; pointer-events: none;
+  filter: sepia(0.18) saturate(0.65) brightness(0.92) drop-shadow(0 18px 26px rgba(8,19,30,0.55));
+  -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
+}
+@media (max-width: 640px) {
+  .philosophy-column-photo { left: -28px; width: 90px; }
+}
+#credibility { position: relative; overflow: hidden; }
+#credibility .section-inner { position: relative; z-index: 1; }
+.credibility-helmet-photo {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -52%);
+  width: 380px; max-width: 55vw; z-index: 0; pointer-events: none;
+  opacity: 0.08; filter: grayscale(1) brightness(1.6);
+}
+.excellence-image { position: relative; }
+.excellence-bust-photo {
+  position: absolute; right: -34px; bottom: -28px; width: 168px; height: auto;
+  z-index: 2; pointer-events: none;
+  filter: sepia(0.14) saturate(0.7) brightness(0.96) drop-shadow(0 20px 30px rgba(8,19,30,0.5));
+}
+@media (max-width: 640px) {
+  .excellence-bust-photo { width: 110px; right: -14px; bottom: -14px; }
 }
 .credibility-headline { text-align: center; max-width: 720px; margin: 0 auto 64px; font-size: clamp(28px,3.5vw,40px); }
 .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
@@ -476,19 +498,7 @@ footer {
       <div class="philosophy-image reveal">
         <img class="media" src="/assets/philosophy-villa.jpg" alt="Modern Mediterranean limestone villa architecture">
         <div class="philosophy-image-caption">Sunrock Residences · Germasogeia</div>
-        <svg class="philosophy-column-motif" viewBox="0 0 76 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect x="4" y="4" width="68" height="8" stroke="currentColor" stroke-width="1"/>
-          <path d="M14 12 Q38 26 62 12" stroke="currentColor" stroke-width="1"/>
-          <path d="M17 26 C11 90 11 140 6 204" stroke="currentColor" stroke-width="1"/>
-          <path d="M59 26 C65 90 65 140 70 204" stroke="currentColor" stroke-width="1"/>
-          <line x1="24" y1="26" x2="20" y2="204" stroke="currentColor" stroke-width="0.6"/>
-          <line x1="31" y1="26" x2="29" y2="204" stroke="currentColor" stroke-width="0.6"/>
-          <line x1="38" y1="26" x2="38" y2="204" stroke="currentColor" stroke-width="0.6"/>
-          <line x1="45" y1="26" x2="47" y2="204" stroke="currentColor" stroke-width="0.6"/>
-          <line x1="52" y1="26" x2="56" y2="204" stroke="currentColor" stroke-width="0.6"/>
-          <rect x="0" y="204" width="76" height="7" stroke="currentColor" stroke-width="1"/>
-          <rect x="8" y="211" width="60" height="5" stroke="currentColor" stroke-width="1"/>
-        </svg>
+        <img class="philosophy-column-photo" src="/assets/greek-column.png" alt="" aria-hidden="true">
       </div>
     </div>
   </div>
@@ -497,6 +507,7 @@ footer {
 <div class="meander-divider"></div>
 <!-- CREDIBILITY -->
 <section id="credibility">
+  <img class="credibility-helmet-photo" src="/assets/greek-helmet.png" alt="" aria-hidden="true">
   <div class="section-inner">
     <div class="eyebrow" style="justify-content:center;">Track record</div>
     <h2 class="credibility-headline">A developer defined by<br><em>depth and precision.</em></h2>
@@ -583,7 +594,10 @@ footer {
 <section id="excellence">
   <div class="section-inner">
     <div class="excellence-grid">
-      <div class="excellence-image reveal"><img class="media" src="/assets/precision-materials.webp" alt="Cyprus architecture — precision and natural materials"></div>
+      <div class="excellence-image reveal">
+        <img class="media" src="/assets/precision-materials.webp" alt="Cyprus architecture — precision and natural materials">
+        <img class="excellence-bust-photo" src="/assets/greek-bust-apollo.png" alt="" aria-hidden="true">
+      </div>
       <div>
         <div class="eyebrow">Standards</div>
         <h2 class="display-caps" style="text-transform:none;font-size:clamp(28px,3.5vw,42px);">Product excellence,<br>from the <em>inside out.</em></h2>
