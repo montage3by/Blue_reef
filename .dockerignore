@@ -1,0 +1,6 @@
+.git
+assets
+uploads
+preview
+*.mp4
+!v2/img/hero.mp4
