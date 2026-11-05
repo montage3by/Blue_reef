@@ -122,7 +122,7 @@ body.menu-open .menu nav a{transform:none;opacity:1}
 .life-head{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end}
 .life-head .h1{margin-top:20px}
 .split .wd{display:inline-block;white-space:nowrap}
-.split .ch{display:inline-block;will-change:transform,opacity}
+.split .ch{display:inline-block}
 .fan{position:relative;height:clamp(420px,46vw,640px);margin-top:clamp(40px,6vw,90px)}
 .fan .fig{position:absolute;bottom:0;height:88%;width:auto}
 .fan .fig.l{left:0}.fan .fig.r{right:0}
@@ -161,7 +161,7 @@ body.menu-open .menu nav a{transform:none;opacity:1}
 .sc{position:absolute;border-radius:22px;overflow:hidden;background:var(--cream-dark);box-shadow:0 18px 50px rgba(8,19,30,.08);will-change:transform}
 .sc img{width:100%;height:100%;object-fit:cover}
 .sc .lab{position:absolute;left:12px;bottom:12px;right:12px;display:flex;align-items:center;gap:10px;color:#fff;font-size:14px;line-height:1.25}
-.sc .lab .circ{width:32px;height:32px;background:rgba(255,255,255,.22);backdrop-filter:blur(6px)}
+.sc .lab .circ{width:32px;height:32px;background:rgba(255,255,255,.28)}
 .sc .lab .circ svg{width:15px;height:15px}
 .sc::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,19,30,.55),transparent 45%);pointer-events:none}
 .sc.ill{background:var(--cream);box-shadow:none;border:1px solid rgba(26,46,66,.08)}
@@ -365,6 +365,7 @@ body.modal-open .modal .sheet{transform:none}
   .rv{opacity:1;transform:none}
 }
 /* Blue Reef v2 additions */
+.fan .fig,.pano svg.scene{will-change:transform}
 .map text{paint-order:stroke;stroke:var(--navy);stroke-width:7px;stroke-linejoin:round}
 .hero-bg video{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 .hero-bg::after{background:linear-gradient(180deg,rgba(8,19,30,.62) 0%,rgba(8,19,30,.3) 45%,rgba(8,19,30,.55) 100%)!important}
@@ -882,6 +883,34 @@ var scene=document.getElementById('scene');
   wk.setAttribute('transform','translate(600 718)');
 })();
 (function(){var gsv=document.getElementById('ground');var gi=el('g',{},gsv);el('path',{d:'M0 70 H1400'},gi);seed=21;for(var j=0;j<30;j++){var gx=r(0,1400),p='';if(gx>380&&gx<1020)continue;for(var q=0;q<4;q++){var dx=r(-7,7),hh=r(14,40);p+='M'+(gx+q*4)+' 70 q'+(dx/2)+' '+(-hh/2)+' '+dx+' '+(-hh)+' '}el('path',{d:p,class:'thin'},gi)}})();
+
+/* ---------- bake watercolour washes into cached raster images (same look, no per-frame filter cost) ---------- */
+(function bake(){
+  var fdef=document.getElementById('paint');if(!fdef||!window.Blob||!window.URL)return;
+  var fsrc=new XMLSerializer().serializeToString(fdef);
+  var list=[].slice.call(document.querySelectorAll('[style*="url(#paint)"]'));
+  list.forEach(function(n){
+    var root=n.ownerSVGElement;if(!root)return;
+    var box;
+    if(n.parentNode===root&&root.viewBox&&root.viewBox.baseVal&&root.viewBox.baseVal.width){var v=root.viewBox.baseVal;box={x:v.x,y:v.y,width:v.width,height:v.height}}
+    else{try{var b=n.getBBox();box={x:b.x-b.width*.2,y:b.y-b.height*.2,width:b.width*1.4,height:b.height*1.4}}catch(e){return}}
+    if(!box.width||!box.height)return;
+    var c=n.cloneNode(true);
+    // resolve colours on the live node first (computed styles need the document)
+    var live=[n].concat([].slice.call(n.querySelectorAll('*')));
+    var cl=[c].concat([].slice.call(c.querySelectorAll('*')));
+    live.forEach(function(l,i){var k=cl[i];if(l.hasAttribute('fill'))k.setAttribute('fill',getComputedStyle(l).fill);k.removeAttribute('style');k.removeAttribute('class')});
+    var scale=box.width>1200?1:2;
+    var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+Math.round(box.width*scale)+'" height="'+Math.round(box.height*scale)+'" viewBox="'+box.x+' '+box.y+' '+box.width+' '+box.height+'"><defs>'+fsrc+'</defs><g filter="url(#paint)">'+new XMLSerializer().serializeToString(c)+'</g></svg>';
+    var url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
+    var img=document.createElementNS(NS,'image');
+    img.setAttribute('x',box.x);img.setAttribute('y',box.y);img.setAttribute('width',box.width);img.setAttribute('height',box.height);
+    img.setAttribute('preserveAspectRatio','none');img.setAttribute('class','wash baked');
+    img.setAttributeNS('http://www.w3.org/1999/xlink','href',url);img.setAttribute('href',url);
+    (function(img,url,w,h){var im=new Image();im.onload=function(){try{var cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(im,0,0,w,h);cv.toBlob(function(bl){if(!bl)return;var u2=URL.createObjectURL(bl);img.setAttribute('href',u2);img.setAttributeNS('http://www.w3.org/1999/xlink','href',u2);URL.revokeObjectURL(url)},'image/png')}catch(e){}};im.src=url})(img,url,Math.round(box.width*scale),Math.round(box.height*scale));
+    n.parentNode.replaceChild(img,n);
+  });
+})();
 
 /* ---------- UI ---------- */
 document.getElementById('burger').addEventListener('click',function(){body.classList.toggle('menu-open')});
