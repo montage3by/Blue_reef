@@ -68,7 +68,7 @@ section{position:relative}
 .pill .ic.active span{max-width:110px;margin-right:8px}
 .pill .ic:hover{background:#fff}
 .pill .ic.active:hover{background:var(--sand-hover)}
-.pill .burger{width:44px;background:var(--navy);color:var(--sand)}
+.pill .burger{width:44px;flex:none;background:var(--navy);color:var(--sand)}
 .pill .burger i{display:block;width:16px;height:1.5px;background:currentColor;box-shadow:0 5px 0 currentColor;transform:translateY(-2.5px);transition:transform .4s var(--ease),box-shadow .3s}
 body.menu-open .pill .burger i{box-shadow:none;transform:rotate(45deg)}
 body.menu-open .pill .burger i::after{content:"";display:block;width:16px;height:1.5px;background:currentColor;transform:rotate(90deg)}
@@ -82,7 +82,7 @@ body.menu-open .menu nav a{transform:none;opacity:1}
 .menu .side a{color:var(--cream)}
 
 /* COOKIE */
-.cookie{position:fixed;left:var(--pad);bottom:20px;z-index:58;display:flex;align-items:center;gap:20px;background:#fff;border-radius:999px;padding:8px 8px 8px 26px;font-size:13px;line-height:1.35;color:#3d4a57;box-shadow:0 12px 40px rgba(8,19,30,.14);max-width:calc(100vw - 32px);transition:transform .8s var(--ease),opacity .5s}
+.cookie{position:fixed;left:var(--pad);bottom:20px;z-index:54;display:flex;align-items:center;gap:20px;background:#fff;border-radius:999px;padding:8px 8px 8px 26px;font-size:13px;line-height:1.35;color:#3d4a57;box-shadow:0 12px 40px rgba(8,19,30,.14);max-width:calc(100vw - 32px);transition:transform .8s var(--ease),opacity .5s}
 .cookie.gone{transform:translateY(160%);opacity:0;pointer-events:none}
 .cookie button{display:flex;align-items:center;gap:10px;background:var(--navy);color:var(--cream);border-radius:999px;padding:6px 20px 6px 6px;font-size:14px;flex:none}
 .cookie button .circ{width:34px;height:34px;border:1px solid rgba(248,244,238,.4)}
@@ -398,6 +398,38 @@ body.modal-open .modal .sheet{transform:none}
   .tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;max-width:100%;border-radius:999px;scrollbar-width:none}
   .tabs::-webkit-scrollbar{display:none}
   .tabs button{white-space:nowrap;flex:none}
+}
+/* mobile layout fixes */
+.life{overflow:hidden}
+.life-head>*,.loc>*,.own-grid>*,.foot>*,.dev-head>*{min-width:0}
+.gal-cap button{width:44px;height:44px}
+.ext{display:inline-block;padding:10px 0 4px}
+.foot-r a{padding:4px 0}
+.foot-b a{padding:10px 0}
+@media (max-width:1024px){
+  .scatter{height:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .sc{position:relative!important;left:auto!important;top:auto!important;width:auto!important;height:auto!important;aspect-ratio:3/4}
+  .sc.wide{grid-column:span 2;aspect-ratio:auto}
+  .scatter .mark,.scatter .spot{display:none}
+  .hot:nth-of-type(2){left:75%!important;top:42%!important}
+  .hot:nth-of-type(3){left:25%!important;top:36%!important}
+  .hot:nth-of-type(4){left:50%!important;top:28%!important}
+  .hot .tip{left:50%;top:52px;transform:translateX(-50%) scale(.9);transform-origin:top center;width:180px}
+  .hot:hover .tip,.hot.open .tip{transform:translateX(-50%) scale(1)}
+  .hot:nth-of-type(2) .tip{left:auto;right:-8px;transform:scale(.9);transform-origin:top right}
+  .hot:nth-of-type(3) .tip{left:-8px;transform:scale(.9);transform-origin:top left}
+  .hot:nth-of-type(2):hover .tip,.hot:nth-of-type(2).open .tip,.hot:nth-of-type(3):hover .tip,.hot:nth-of-type(3).open .tip{transform:scale(1)}
+}
+@media (max-width:720px){
+  .scatter{grid-template-columns:1fr 1fr;gap:10px}
+  .sc.wide{grid-column:1/-1;aspect-ratio:16/10}
+  .sc .lab{font-size:13px;gap:8px}
+}
+@media (max-width:380px){.hot{display:none}}
+@media (max-width:360px){
+  .pill{gap:4px;padding:5px}
+  .pill .ic[data-sec="location"]{display:none}
+  .pill .logo{padding:0 12px;letter-spacing:.1em}
 }
 </style>
 
@@ -1007,6 +1039,8 @@ mm.add('(min-width: 721px)',function(){
     .to(cards[1],{y:-10,rotate:0,ease:'none'},0)
     .from('.fan .fig.l',{x:-80,opacity:0,ease:'none'},0)
     .from('.fan .fig.r',{x:80,opacity:0,ease:'none'},0);
+});
+mm.add('(min-width: 1025px)',function(){
   gsap.utils.toArray('#scatter [data-s]').forEach(function(c){var s=parseFloat(c.dataset.s);gsap.fromTo(c,{y:s*500},{y:-s*500,ease:'none',scrollTrigger:{trigger:'#scatter',start:'top bottom',end:'bottom top',scrub:true}})});
   gsap.from('#scatter .sc',{scale:.85,opacity:0,duration:1.1,stagger:.06,ease:'power3.out',scrollTrigger:{trigger:'#scatter',start:'top 75%'}});
 });
