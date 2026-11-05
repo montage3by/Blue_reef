@@ -98,7 +98,7 @@ body.menu-open .menu nav a{transform:none;opacity:1}
 .hero-card a{display:flex;align-items:center;gap:12px;font-size:15px}
 .hero-card .circ{background:var(--sand);color:var(--navy)}
 .hero-card a:hover .circ{transform:translateX(4px)}
-.hero-center{position:absolute;left:0;right:0;top:20vh;text-align:center;display:flex;flex-direction:column;align-items:center}
+.hero-center{position:absolute;left:0;right:0;top:clamp(250px,30vh,330px);text-align:center;display:flex;flex-direction:column;align-items:center}
 .logotype{position:relative;display:inline-block;font-family:var(--serif);font-weight:400;font-size:clamp(70px,12.5vw,200px);line-height:.95;letter-spacing:-.01em;color:var(--cream)}
 .logotype .ch{display:inline-block}
 .tagline{font-size:clamp(18px,1.9vw,26px);margin-top:18px;letter-spacing:.01em}
@@ -128,9 +128,7 @@ body.menu-open .menu nav a{transform:none;opacity:1}
 .fan .fig.l{left:0}.fan .fig.r{right:0}
 .fan .ground{position:absolute;left:0;right:0;bottom:2px;width:100%;height:80px}
 .fcard{position:absolute;left:50%;top:6%;width:clamp(220px,23vw,330px);aspect-ratio:3/4;margin-left:calc(clamp(220px,23vw,330px)/-2);will-change:transform}
-.fcard .shape{position:absolute;inset:0;overflow:hidden;border-radius:46% 54% 40% 60% / 38% 42% 58% 62%;background:var(--cream-dark)}
-.fcard:nth-child(2) .shape{border-radius:58% 42% 55% 45% / 45% 55% 45% 55%}
-.fcard:nth-child(3) .shape{border-radius:40% 60% 48% 52% / 60% 40% 60% 40%}
+.fcard .shape{position:absolute;inset:0;overflow:hidden;border-radius:28px;background:var(--cream-dark)}
 .fcard img{width:100%;height:100%;object-fit:cover}
 .fcard .lab{position:absolute;left:10%;right:10%;bottom:12%;background:#fff;border-radius:18px;padding:14px 16px;display:flex;gap:12px;align-items:center;box-shadow:0 10px 30px rgba(8,19,30,.12)}
 .fcard .lab .circ{width:40px;height:40px;background:var(--cream)}
@@ -534,9 +532,9 @@ body.modal-open .modal .sheet{transform:none}
         <path d="M54 470 H158 M48 484 H164 V504 H48Z"/>
         <path d="M0 504 H360"/>
       </svg>
-      <div class="fcard"><div class="shape"><img src="img/materials.webp" alt="" loading="lazy"></div><div class="lab"><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20L20 4M8 20l12-12M4 14L14 4"/></svg></span><span><small>01 · Product first</small><b>Design and engineering lead every decision</b></span></div></div>
-      <div class="fcard"><div class="shape"><img src="img/villa.webp" alt="" loading="lazy"></div><div class="lab"><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 20h18M5 20V10l7-5 7 5v10"/></svg></span><span><small>02 · Enduring vision</small><b>Homes that gain in quality and value</b></span></div></div>
-      <div class="fcard"><div class="shape"><img src="img/concept.webp" alt="" loading="lazy"></div><div class="lab"><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span><span><small>03 · Integrity</small><b>Founders involved in every project</b></span></div></div>
+      <div class="fcard"><div class="shape"><img src="img/coastal.webp" alt="" loading="lazy"></div><div class="lab"><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20L20 4M8 20l12-12M4 14L14 4"/></svg></span><span><small>01 · Product first</small><b>Design and engineering lead every decision</b></span></div></div>
+      <div class="fcard"><div class="shape"><img src="img/location.webp" alt="" loading="lazy"></div><div class="lab"><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 20h18M5 20V10l7-5 7 5v10"/></svg></span><span><small>02 · Enduring vision</small><b>Homes that gain in quality and value</b></span></div></div>
+      <div class="fcard"><div class="shape"><img src="img/night.webp" alt="" loading="lazy"></div><div class="lab"><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span><span><small>03 · Integrity</small><b>Founders involved in every project</b></span></div></div>
     </div>
     <div class="stats-row">
       <div class="srow rv"><span class="n" data-count="46">0</span><span class="l">Residences at Sunrock, our flagship in Limassol</span></div>
@@ -602,14 +600,13 @@ body.modal-open .modal .sheet{transform:none}
   </div>
   <div class="gal" id="gal">
     <div class="gal-prog" id="galProg"></div>
-    <div class="slide on" data-cap="Pool terrace at sunset"><img src="img/pool.webp" alt="Pool terrace at sunset" loading="lazy"></div>
-    <div class="slide" data-cap="Living room"><img src="img/living.webp" alt="Living room" loading="lazy"></div>
+    <div class="slide on" data-cap="Living room"><img src="img/living.webp" alt="Living room" loading="lazy"></div>
     <div class="slide" data-cap="Terrace with a sea view"><img src="img/view.webp" alt="Terrace with a sea view" loading="lazy"></div>
     <div class="slide" data-cap="Bedroom"><img src="img/bedroom.webp" alt="Bedroom" loading="lazy"></div>
     <div class="slide" data-cap="Limassol and the Germasogeia hills"><img src="img/location.webp" alt="Limassol and the Germasogeia hills" loading="lazy"></div>
     <div class="slide plan" data-cap="Floor plan · Type 02 with roof garden"><img src="img/floorplan.png" alt="Floor plan, type 02 with roof garden" loading="lazy"></div>
     <div class="gal-ui">
-      <div class="gal-cap"><button id="gPrev" aria-label="Previous">←</button><span id="gCap">01 · Pool terrace at sunset</span><button id="gNext" aria-label="Next">→</button></div>
+      <div class="gal-cap"><button id="gPrev" aria-label="Previous">←</button><span id="gCap">01 · Living room</span><button id="gNext" aria-label="Next">→</button></div>
       <div class="thumbs" id="thumbs"></div>
     </div>
   </div>
@@ -621,25 +618,24 @@ body.modal-open .modal .sheet{transform:none}
     <div class="eyebrow rv">Standards</div>
     <h2 class="h1 split" data-split style="margin-top:16px">Product excellence, from the inside out</h2>
     <div class="scatter" id="scatter">
-      <div class="sc" data-s="-.12" style="left:1%;top:4%;width:19%;height:24%"><img src="img/villa.webp" alt="" loading="lazy"><div class="lab"><span class="circ">01</span>Architecture with restraint</div></div>
+      <div class="sc" data-s="-.12" style="left:1%;top:4%;width:19%;height:24%"><img src="img/pool.webp" alt="" loading="lazy" style="object-position:30% 50%"><div class="lab"><span class="circ">01</span>Architecture with restraint</div></div>
       <div class="sc ill" data-s=".1" style="left:24%;top:12%;width:18%;height:22%">
         <svg class="ink" viewBox="0 0 200 140"><path d="M30 124 H170"/><path d="M50 124 V40 H150 V124 M50 68 H150 M50 96 H150 M83 40 V124 M117 40 V124"/><path d="M40 40 L100 16 L160 40"/><rect class="wash" x="52" y="42" width="96" height="80" fill="var(--sand)" opacity=".35" style="filter:url(#paint)"/></svg>
         <div class="lab"><span class="circ">02</span>Engineering for longevity</div>
       </div>
-      <div class="sc" data-s="-.2" style="left:48%;top:2%;width:20%;height:24%"><img src="img/materials.webp" alt="" loading="lazy"><div class="lab"><span class="circ">03</span>Italian fixtures, natural stone, engineered wood</div></div>
+      <div class="sc" data-s="-.2" style="left:48%;top:2%;width:20%;height:24%"><img src="img/living.webp" alt="" loading="lazy"><div class="lab"><span class="circ">03</span>Italian fixtures, natural stone, engineered wood</div></div>
       <div class="mark" data-s=".22" style="left:74%;top:6%">Blue Reef</div>
-      <div class="sc" data-s="-.06" style="left:74%;top:20%;width:22%;height:24%"><img src="img/pool.webp" alt="" loading="lazy" style="object-position:30% 60%"><div class="lab"><span class="circ">04</span>Amenities shaped for daily life</div></div>
+      <div class="sc" data-s="-.06" style="left:74%;top:20%;width:22%;height:24%"><img src="img/view.webp" alt="" loading="lazy"><div class="lab"><span class="circ">04</span>Amenities shaped for daily life</div></div>
       <div class="sc ill wide" data-s=".16" style="left:6%;top:44%;width:28%;height:20%">
         <svg class="ink" viewBox="0 0 260 120"><path d="M20 104 H240"/><path d="M60 104 V56 L96 34 L132 56 V104 M84 104 V78 H108 V104"/><path d="M160 104 V70 M150 70 H170 M146 58 C146 46 174 46 174 58 Z"/><path d="M196 104 C200 80 214 70 226 66" /><ellipse class="wash" cx="216" cy="60" rx="22" ry="16" fill="var(--olive)" opacity=".55" style="filter:url(#paint)"/></svg>
         <div class="lab"><span class="circ">05</span>Property management and care after delivery</div>
       </div>
-      <div class="sc" data-s=".2" style="left:40%;top:40%;width:22%;height:28%"><img src="img/living.webp" alt="" loading="lazy"><div class="lab"><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10l9-6 9 6v10H3z"/></svg></span>Interiors that improve with use</div></div>
+      <div class="sc" data-s=".2" style="left:40%;top:40%;width:22%;height:28%"><img src="img/bedroom.webp" alt="" loading="lazy"><div class="lab"><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10l9-6 9 6v10H3z"/></svg></span>Interiors that improve with use</div></div>
       <div class="sc ill" data-s="-.1" style="left:68%;top:52%;width:17%;height:20%">
         <svg class="ink" viewBox="0 0 200 140"><path d="M30 120 H170"/><path d="M100 120 V30"/><path d="M100 30 L60 120 M100 30 L140 120"/><circle cx="100" cy="30" r="6"/><path d="M70 92 A40 40 0 0 0 130 92" class="thin"/></svg>
         <div class="lab"><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span>Planned for decades, not seasons</div>
       </div>
       <div class="sc" data-s=".08" style="left:86%;top:62%;width:13%;height:20%"><img src="img/sunset.webp" alt="" loading="lazy"><div class="lab">Limassol</div></div>
-      <div class="sc" data-s="-.14" style="left:16%;top:72%;width:17%;height:18%"><img src="img/bedroom.webp" alt="" loading="lazy"><div class="lab">Calm, considered spaces</div></div>
       <svg class="spot ink draw" data-s=".28" viewBox="0 0 160 160" style="left:50%;top:78%;width:150px" aria-hidden="true"><path d="M20 140 H140"/><path d="M80 140 V60"/><ellipse class="wash" cx="80" cy="52" rx="44" ry="30" fill="var(--olive)" opacity=".5" style="filter:url(#paint)"/><path d="M80 90 C62 80 52 70 48 56 M80 80 C98 72 108 62 110 48 M80 70 C77 58 80 46 88 36"/></svg>
       <svg class="spot ink draw" data-s="-.25" viewBox="0 0 100 200" style="left:93%;top:2%;width:56px" aria-hidden="true"><path class="wash" d="M50 10 C70 50 74 120 50 180 C26 120 30 50 50 10Z" fill="var(--olive)" opacity=".5" style="filter:url(#paint)"/><path d="M50 10 C70 50 74 120 50 180 C26 120 30 50 50 10Z"/><path d="M50 180 V196"/></svg>
     </div>
@@ -765,7 +761,7 @@ body.modal-open .modal .sheet{transform:none}
         <span class="promo-tag">Private introduction</span>
         <div class="ps on"><img src="img/night.webp" alt="" loading="lazy"><div class="pt"><b>Begin with a private conversation</b><span>Speak with Blue Reef about current and upcoming developments in Cyprus.</span></div></div>
         <div class="ps"><img src="img/pool.webp" alt="" loading="lazy"><div class="pt"><b>Visit Sunrock</b><span>See the hillside, the views and the progress on site.</span></div></div>
-        <div class="ps"><img src="img/materials.webp" alt="" loading="lazy"><div class="pt"><b>Touch the materials</b><span>Natural stone, engineered wood and Italian fixtures.</span></div></div>
+        <div class="ps"><img src="img/living.webp" alt="" loading="lazy"><div class="pt"><b>Touch the materials</b><span>Natural stone, engineered wood and Italian fixtures.</span></div></div>
         <div class="bars"><i class="on"></i><i></i><i></i></div>
       </div>
     </div>
