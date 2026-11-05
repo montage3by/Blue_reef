@@ -108,7 +108,7 @@ body.menu-open .menu nav a{transform:none;opacity:1}
 .hero-line path{fill:none;stroke:var(--sand);stroke-width:1.6}
 
 /* PANORAMA */
-.pano{height:220vh;background:var(--paper)}
+.pano{height:125vh;background:var(--paper)}
 .pano-pin{position:sticky;top:0;height:100svh;overflow:hidden}
 .pano svg.scene path:not(.wash),.pano svg.scene circle:not(.wash),.pano svg.scene rect:not(.wash),.pano svg.scene ellipse:not(.wash){stroke-width:2.6}
 .pano svg.scene .thin{stroke-width:1.6}
@@ -985,7 +985,7 @@ gsap.to('#heroBg',{yPercent:22,scale:1.06,ease:'none',scrollTrigger:{trigger:'#h
 gsap.to('.hero-center',{yPercent:-40,opacity:0,ease:'none',scrollTrigger:{trigger:'#hero',start:'10% top',end:'70% top',scrub:true}});
 
 var sceneLines=prep(scene);
-gsap.timeline({scrollTrigger:{trigger:'#pano',start:'top 70%',end:'bottom bottom',scrub:1}})
+gsap.timeline({scrollTrigger:{trigger:'#pano',start:'top 85%',end:'bottom bottom',scrub:.6}})
    .to(sceneLines,{strokeDashoffset:0,ease:'none',stagger:{amount:.5}},0)
    .from(scene.querySelectorAll('.wash'),{opacity:0,ease:'none',stagger:{amount:.4}},0.1)
    .to('#panoText .w',{opacity:1,stagger:.04,ease:'none'},0.1)
